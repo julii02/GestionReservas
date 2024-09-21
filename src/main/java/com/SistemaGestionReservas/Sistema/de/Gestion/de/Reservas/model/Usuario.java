@@ -2,5 +2,6 @@
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model;
 
 public class Usuario {
-    /*sdsd*/
+    private long idUsuario;
+    private String nombre;
 }
