@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ReservaService implements IReservaService{
 
     @Override
-    public void RegistarReserva(ReservaDTO dto) {
+    public void RegistarReserva(Reserva reserva) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

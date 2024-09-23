@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IReservaService {
         //alta de Reserva
-    public void RegistarReserva(ReservaDTO dto);
+    public void RegistarReserva(Reserva reserva);
     
     //baja de Reserva
     public void deleteReserva(Long idReserva);
