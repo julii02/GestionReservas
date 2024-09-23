@@ -29,46 +29,50 @@ public class ReservaService implements IReservaService{
     
     @Override
     public String RegistarReserva(Reserva reserva) {
-        Long idEspacio = reserva.getEspacio().getIdEspacio();
-        LocalDateTime inicioReserva = reserva.getInicioReserva();
-        LocalDateTime finReserva = reserva.getFinReserva();
+         Long idEspacio = reserva.getEspacio().getIdEspacio();
+    LocalDateTime inicioReserva = reserva.getInicioReserva();
+    LocalDateTime finReserva = reserva.getFinReserva();
 
-        // Verificar si el espacio existe
-        Espacio espacio = espacioRepo.findById(idEspacio).orElse(null);
-        if (espacio == null) {
-            return "Error: El espacio con ID " + idEspacio + " no existe.";
+    // Verificar si el espacio existe
+    Espacio espacio = espacioRepo.findById(idEspacio).orElse(null);
+    if (espacio == null) {
+        return "Error: El espacio con ID " + idEspacio + " no existe.";
+    }
+
+    // Obtener todas las reservas y verificar si hay conflicto de fechas
+    List<Reserva> reservasExistentes = reservaRepo.findAll();
+
+    for (Reserva reserv : reservasExistentes) {
+        if (reserv.getEspacio().getIdEspacio() == idEspacio &&
+            reserv.getInicioReserva().isBefore(finReserva) &&
+            reserv.getFinReserva().isAfter(inicioReserva)) {
+            return "Error: Ya existe una reserva para este espacio en el rango de fechas especificado.";
         }
+    }
+    
+    // Paso 1: Guardar la reserva primero
+    reservaRepo.save(reserva);
 
-        // Obtener todas las reservas y verificar si hay conflicto de fechas
-        List<Reserva> reservasExistentes = reservaRepo.findAll();
+    // Paso 2: Crear la factura después de guardar la reserva
+    Duration duracion = Duration.between(inicioReserva, finReserva);
+    long horasReserva = duracion.toHours();
+    
+    // Calcular el monto total (precio por hora * horas de reserva)
+    long montoPorHora = espacioRepo.findById(idEspacio).orElse(null).getPrecioPorHora();
+    long montoTotal = horasReserva * montoPorHora;
 
-        for (Reserva reserv : reservasExistentes) {
-            if (reserv.getEspacio().getIdEspacio() == idEspacio &&
-                reserv.getInicioReserva().isBefore(finReserva) &&
-                reserv.getFinReserva().isAfter(inicioReserva)) {
-                return "Error: Ya existe una reserva para este espacio en el rango de fechas especificado.";
-            }
-        }
-        
-        // Calcular la duración en horas de la reserva
-        Duration duracion = Duration.between(inicioReserva, finReserva);
-        long horasReserva = duracion.toHours();
-        
-         // Calcular el monto total (precio por hora * horas de reserva)
-        long montoTotal = horasReserva * reserva.getEspacio().getPrecioPorHora();
-        
-        Factura nuevaFactura = new Factura();
-        nuevaFactura.setMontoTotal((double) montoTotal);
-        nuevaFactura.setFechaEmision(LocalDate.now());
-        nuevaFactura.setReserva(reserva);
-        
-        //guardar factura
-        facturaRepo.save(nuevaFactura);
-              
-        // Guardar la nueva reserva
-        reservaRepo.save(reserva);
-        return "Reserva guardada exitosamente." + "espacio: " + reserva.getEspacio().getNombre() + "usuario: " + reserva.getUsuario().getNombre() +
-                "inicio reserva: " + reserva.getInicioReserva() + "fin reserva: " + reserva.getFinReserva();
+    Factura nuevaFactura = new Factura();
+    nuevaFactura.setMontoTotal((double) montoTotal);
+    nuevaFactura.setFechaEmision(LocalDate.now());
+    nuevaFactura.setReserva(reserva); // Aquí la reserva ya está guardada y tiene un ID
+
+    // Paso 3: Guardar la factura
+    facturaRepo.save(nuevaFactura);
+    
+    return "Reserva guardada exitosamente." + " Espacio: " + reserva.getEspacio().getNombre() + 
+           " Usuario: " + reserva.getUsuario().getNombre() + 
+           " Inicio reserva: " + reserva.getInicioReserva() + 
+           " Fin reserva: " + reserva.getFinReserva();
     }
 
     @Override

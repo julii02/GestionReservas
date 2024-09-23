@@ -1,6 +1,7 @@
 
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Reserva {
     @JoinColumn(name ="idEspacio")
     private Espacio espacio;
     
+    @JsonIgnore
     @OneToOne(mappedBy = "reserva")
     private Factura factura;
 
