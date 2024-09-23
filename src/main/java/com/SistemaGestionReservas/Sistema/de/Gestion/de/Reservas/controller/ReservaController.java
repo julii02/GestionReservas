@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.controller;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Reserva;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service.IReservaService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class ReservaController {
     private IReservaService reservaServi;
     
     @PostMapping("/reserva/crear")
-    public void registrarReserva(@RequestBody Reserva reserva){
+    public void registrarReserva(@RequestBody @Valid Reserva reserva){
         reservaServi.RegistarReserva(reserva);
     }
     

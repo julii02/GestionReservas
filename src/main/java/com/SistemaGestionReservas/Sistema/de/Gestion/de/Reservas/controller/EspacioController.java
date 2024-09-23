@@ -2,6 +2,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.controller;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service.IEspacioService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class EspacioController {
     private IEspacioService espacioServ;
     
     @PostMapping("espacio/guardar")
-    public String saveEspacio(@RequestBody Espacio espacio){
+    public String saveEspacio(@RequestBody @Valid Espacio espacio){
         espacioServ.saveEspacio(espacio);
         return "Espacio Guardado!";
     }

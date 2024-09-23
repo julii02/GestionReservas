@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.controller;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Usuario;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service.IUsuarioService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class UsuarioController {
     public IUsuarioService usuarioServ;
     
     @PostMapping("usuario/guardar")
-    public String saveUsuario(@RequestBody Usuario usuario){
+    public String saveUsuario(@RequestBody @Valid Usuario usuario){
         usuarioServ.saveUsuario(usuario);
         return "Guardado Correctamente!";
     }

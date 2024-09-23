@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Future;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,12 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idReserva;
+    
+    @Future
     private LocalDateTime inicioReserva;
+    @Future
     private LocalDateTime finReserva;
+    
     @ManyToOne
     @JoinColumn(name ="idUsuario")
     private Usuario usuario;
