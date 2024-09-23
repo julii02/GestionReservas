@@ -15,7 +15,7 @@ public interface IEspacioService {
     public void deleteEspacio(Long idEspacio);
     
    //Traer la lista de los Espacio
-    public List<Espacio> getEspaciosOcupados();
+    public List<Espacio> getEspacios();
     
     //lectura de un solo Espacio
     public Espacio  findEspacio(Long idEspacio);
