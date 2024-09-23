@@ -7,11 +7,11 @@ import java.util.List;
 
 
 public interface IReservaService {
-        //alta de Reserva
-    public void RegistarReserva(Reserva reserva);
+    //alta de Reserva
+    public String RegistarReserva(Reserva reserva);
     
     //baja de Reserva
-    public void deleteReserva(Long idReserva);
+    public String deleteReserva(Long idReserva);
     
    //Traer la lista de los Espacio
     public List<Reserva> getReservas();
