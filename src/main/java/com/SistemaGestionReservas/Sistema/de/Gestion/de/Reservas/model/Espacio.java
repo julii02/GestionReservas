@@ -30,8 +30,8 @@ public class Espacio {
     @Size(min = 3, max = 30)
     private String descripcion;
     
-    @NotBlank
-    @Min(10)@Max(10000)
+    
+    @Min(900)@Max(10000)
     private long precioPorHora;
     
     @JsonIgnore

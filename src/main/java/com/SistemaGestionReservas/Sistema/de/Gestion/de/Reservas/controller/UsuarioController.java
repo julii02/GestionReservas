@@ -18,7 +18,7 @@ public class UsuarioController {
     public IUsuarioService usuarioServ;
     
     @PostMapping("usuario/guardar")
-    public String saveUsuario(@RequestBody @Valid Usuario usuario){
+    public String saveUsuario( @Valid @RequestBody Usuario usuario){
         usuarioServ.saveUsuario(usuario);
         return "Guardado Correctamente!";
     }

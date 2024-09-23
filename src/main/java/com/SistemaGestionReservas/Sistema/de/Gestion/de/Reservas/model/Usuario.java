@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.Getter;
@@ -23,12 +24,16 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUsuario;
     
+    @NotNull
    @NotBlank(message = "El nombre del estudiante es obligatorio")
     @Size(min = 3, max = 15, message = "El nombre debe tener entre 3 y 50 caracteres")
     private String nombre;
-    @NotBlank(message = "El nombre del estudiante es obligatorio")
-    @Size(min = 3, max = 15, message = "El nombre debe tener entre 3 y 50 caracteres")
+   
+    @NotNull
+    @Size(min = 3, max = 50)
     private String apellido;
+   
+    @NotNull
     @Email(message = "El correo electrónico no es válido")
     private String email;
     

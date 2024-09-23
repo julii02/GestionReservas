@@ -18,8 +18,8 @@ public class ReservaController {
     private IReservaService reservaServi;
     
     @PostMapping("/reserva/crear")
-    public void registrarReserva(@RequestBody @Valid Reserva reserva){
-        reservaServi.RegistarReserva(reserva);
+    public String registrarReserva(@RequestBody @Valid Reserva reserva){
+       return reservaServi.RegistarReserva(reserva);
     }
     
     @GetMapping("/reserva/traer")

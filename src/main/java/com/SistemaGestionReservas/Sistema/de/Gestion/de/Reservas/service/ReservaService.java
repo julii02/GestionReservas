@@ -4,9 +4,11 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Factura;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Reserva;
+import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Usuario;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IEspacioRepository;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IFacturaRepository;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IReservaRepository;
+import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IUsuarioRepository;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,11 +23,18 @@ public class ReservaService implements IReservaService{
     @Autowired
     private IReservaRepository reservaRepo;
     
+    @Autowired
+    
+    private IUsuarioRepository usuarioRepo;
+    
     @Autowired 
     private IEspacioRepository espacioRepo;
     
     @Autowired
     private IFacturaRepository facturaRepo;
+    
+    @Autowired
+    private EmailService emailService;
     
     @Override
     public String RegistarReserva(Reserva reserva) {
@@ -68,11 +77,22 @@ public class ReservaService implements IReservaService{
 
     // Paso 3: Guardar la factura
     facturaRepo.save(nuevaFactura);
+    Usuario user = usuarioRepo.findById(reserva.getUsuario().getIdUsuario()).orElse(null);
+    String emailUsuario =  user.getEmail();
+    String asunto = "Confirmación de Reserva";
+    String mensaje = "Estimado " + user.getNombre() + ",\n\n" +
+                     "Su reserva ha sido confirmada en el espacio " + espacio.getNombre() + 
+                     " desde " + reserva.getInicioReserva() + " hasta " + reserva.getFinReserva() + ".\n" +
+                     "Monto total: $" + montoTotal + ".\n\n" + 
+                     "Gracias por su preferencia.";
+
+    emailService.sendEmail(emailUsuario, asunto, mensaje);
     
-    return "Reserva guardada exitosamente." + " Espacio: " + reserva.getEspacio().getNombre() + 
-           " Usuario: " + reserva.getUsuario().getNombre() + 
+    return "Reserva guardada exitosamente." + " Espacio: " + espacio.getDescripcion() + 
+           " Usuario: " + user.getNombre() + 
            " Inicio reserva: " + reserva.getInicioReserva() + 
            " Fin reserva: " + reserva.getFinReserva();
+    
     }
 
     @Override

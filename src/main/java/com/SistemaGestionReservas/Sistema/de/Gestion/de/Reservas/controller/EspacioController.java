@@ -16,7 +16,7 @@ public class EspacioController {
     @Autowired
     private IEspacioService espacioServ;
     
-    @PostMapping("espacio/guardar")
+    @PostMapping("/espacio/guardar")
     public String saveEspacio(@RequestBody @Valid Espacio espacio){
         espacioServ.saveEspacio(espacio);
         return "Espacio Guardado!";
