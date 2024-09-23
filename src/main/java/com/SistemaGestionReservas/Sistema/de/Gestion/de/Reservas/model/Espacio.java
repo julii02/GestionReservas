@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +19,9 @@ public class Espacio {
     private String nombre;
     private String descripcion;
     private long precioPorHora;
+    
+    @OneToMany(mappedBy = "espacio")
+    private List<Reserva> listaReservas;
 
     public Espacio() {
     }

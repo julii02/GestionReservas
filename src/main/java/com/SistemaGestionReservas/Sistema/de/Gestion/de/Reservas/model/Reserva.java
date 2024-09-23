@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +23,13 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name ="idUsuario")
     private Usuario usuario;
+    
     @ManyToOne
     @JoinColumn(name ="idEspacio")
     private Espacio espacio;
+    
+    @OneToOne(mappedBy = "reserva")
+    private Factura factura;
 
     public Reserva() {
     }
