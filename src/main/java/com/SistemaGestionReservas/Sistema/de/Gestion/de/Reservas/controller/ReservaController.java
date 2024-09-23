@@ -20,7 +20,7 @@ public class ReservaController {
         reservaServi.RegistarReserva(reserva);
     }
     
-    @GetMapping("/reserva/traer")
+    @GetMapping("/reserva/traertodo")
     public void TraerReservas(){
         reservaServi.getReservas();
     }
