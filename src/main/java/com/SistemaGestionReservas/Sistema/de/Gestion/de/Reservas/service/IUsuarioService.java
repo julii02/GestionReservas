@@ -6,5 +6,20 @@ import java.util.List;
 
 public interface IUsuarioService {
     
-    public List <Usuario> traerUsuarios();
+        //alta de Usuario
+    public void saveUsuario(Usuario usuario);
+    
+    //baja de Espacio
+    public void deleteUsuario(Long idUsuario);
+    
+   //Traer la lista de los Usuario
+    public List<Usuario> getUsuarios();
+    
+    //lectura de un solo Espacio
+    public Usuario  findUsuario(Long idUsuario);
+   
+    //Modificar Usuario
+    public void editUsuario(Usuario usuario);
+    
+    
 }

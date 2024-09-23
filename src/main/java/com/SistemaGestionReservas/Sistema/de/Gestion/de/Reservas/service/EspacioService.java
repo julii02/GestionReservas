@@ -27,10 +27,9 @@ public class EspacioService implements IEspacioService{
     }
 
     @Override
-    public List<Espacio> getEspaciosDisponibles() {
+    public List<Espacio> getEspaciosOcupados() {
             List<Espacio> listaEspacios = espacioRepo.findAll(); ;
-        // hay que fijarse de traer todos los espacios que no esten en reserva
-        
+       
         return listaEspacios ;
     }
 
