@@ -1,7 +1,6 @@
 
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 
-import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.DTO.ReservaDTO;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Factura;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Reserva;
@@ -11,6 +10,7 @@ import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IRes
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +90,20 @@ public class ReservaService implements IReservaService{
     @Override
     public void editReserva(Reserva reserva) {
         this.RegistarReserva(reserva);
+    }
+
+    @Override
+    public List<Reserva> getReservaEspacios(Long idEspacio ) {
+ 
+            List<Reserva> listaReservas = reservaRepo.findAll();
+            List<Reserva> listaFiltrada = new ArrayList();
+            
+            for(Reserva reserva : listaReservas ){
+                if(reserva.getEspacio().getIdEspacio() == idEspacio)
+                    listaFiltrada.add(reserva);
+            }
+            return listaFiltrada;
+    
     }
     
 }

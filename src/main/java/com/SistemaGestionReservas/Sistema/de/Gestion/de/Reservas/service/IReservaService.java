@@ -21,5 +21,8 @@ public interface IReservaService {
     //Modificar Espacio
     public void editReserva(Reserva reserva);
     
+    //Mostar reservas de un espacio
+    public List<Reserva> getReservaEspacios(Long idEspacio);
+    
     
 }
