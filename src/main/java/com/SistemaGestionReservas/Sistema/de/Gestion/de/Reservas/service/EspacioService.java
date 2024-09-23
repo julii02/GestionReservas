@@ -28,9 +28,9 @@ public class EspacioService implements IEspacioService{
 
     @Override
     public List<Espacio> getEspaciosOcupados() {
-            List<Espacio> listaEspacios = espacioRepo.findAll(); ;
+            List<Espacio> listaEspacioss = espacioRepo.findAll(); 
        
-        return listaEspacios ;
+        return listaEspacioss ;
     }
 
     @Override
