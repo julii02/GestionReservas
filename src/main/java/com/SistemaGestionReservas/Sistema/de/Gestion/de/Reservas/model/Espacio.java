@@ -1,6 +1,7 @@
 
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Espacio {
     private String descripcion;
     private long precioPorHora;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "espacio")
     private List<Reserva> listaReservas;
 

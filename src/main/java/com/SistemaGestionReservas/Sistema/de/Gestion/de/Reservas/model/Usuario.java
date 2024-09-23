@@ -1,6 +1,7 @@
 
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Usuario {
     private String apellido;
     private String email;
     
-    
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> listaReservas;
 
