@@ -3,133 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Reserva</title>
+    <title>Página Principal de Usuarios</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
+            font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-        h1 {
-            color: #333;
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             text-align: center;
         }
-        form {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="datetime-local"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #5cb85c;
+
+        .button-container a {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
             color: white;
+            background-color: #3498db;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
         }
-        button:hover {
-            background-color: #4cae4c;
+
+        .button-container a:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #34495e;
         }
     </style>
-    <script>
-        async function cargarEspacios() {
-            const response = await fetch('/espacio/traer');
-            const espacios = await response.json();
-            const selectEspacio = document.getElementById("idEspacio");
-
-            espacios.forEach(espacio => {
-                const option = document.createElement("option");
-                option.value = espacio.idEspacio;
-                option.text = espacio.nombreEspacio;
-                selectEspacio.appendChild(option);
-            });
-        }
-
-        async function buscarUsuario() {
-            const nombreUsuario = document.getElementById("nombreUsuario").value;
-            const response = await fetch(`/usuario/buscarPorNombre/${nombreUsuario}`);
-            const usuario = await response.json();
-            if (usuario) {
-                document.getElementById("idUsuario").value = usuario.idUsuario;
-            } else {
-                alert("Usuario no encontrado");
-            }
-        }
-
-        async function registrarReserva(event) {
-            event.preventDefault();
-
-            const reserva = {
-                inicioReserva: document.getElementById("inicioReserva").value,
-                finReserva: document.getElementById("finReserva").value,
-                usuario: { idUsuario: parseInt(document.getElementById("idUsuario").value) }, // Convertimos a Long
-                espacio: { idEspacio: parseInt(document.getElementById("idEspacio").value) }  // Convertimos a Long
-            };
-
-            const response = await fetch('/reserva/crear', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(reserva)
-            });
-
-            const result = await response.text();
-            alert(result);
-        }
-
-        window.onload = cargarEspacios; // Cargamos los espacios al cargar la página
-    </script>
 </head>
 <body>
-
-    <h1>Crear Reserva</h1>
-
-    <form onsubmit="registrarReserva(event)">
-        <label for="nombreUsuario">Nombre del Usuario:</label>
-        <input type="text" id="nombreUsuario" name="nombreUsuario" required>
-        <button type="button" onclick="buscarUsuario()">Buscar Usuario</button>
-
-        <label for="idEspacio">Seleccionar Espacio:</label>
-        <select id="idEspacio" name="idEspacio" required>
-            <option value="" disabled selected>Seleccione un espacio</option>
-        </select>
-
-        <label for="inicioReserva">Fecha y hora de inicio:</label>
-        <input type="datetime-local" id="inicioReserva" name="inicioReserva" required>
-
-        <label for="finReserva">Fecha y hora de fin:</label>
-        <input type="datetime-local" id="finReserva" name="finReserva" required>
-
-        <!-- Campos ocultos donde se almacenarán los ID de usuario -->
-        <input type="hidden" id="idUsuario" name="idUsuario">
-
-        <button type="submit">Registrar Reserva</button>
-    </form>
-
+    <h1>Gestión de Reservas</h1>
+    <div class="button-container">
+        <a href="agregarReservas.html">Agregar Reserva</a>
+        <a href="traerReservas.html">Ver Reservas</a>
+        <a href="index.html">Volver</a>
+    </div>
 </body>
 </html>

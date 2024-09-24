@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Factura;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IFacturaRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,11 @@ public class FacturaService implements IFacturaService{
         factu.setEstado("Pagado");
         facturaRepo.save(factu);
         return factu;
+    }
+
+    @Override
+    public List<Factura> traerFacturas() {
+        return facturaRepo.findAll();
     }
     
 }
