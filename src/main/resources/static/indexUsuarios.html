@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal de Usuarios</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .button-container a {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button-container a:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Usuarios</h1>
+    <div class="button-container">
+        <a href="agregar_usuario.html">Agregar Usuario</a>
+        <a href="traerUsuarios.html">Ver Usuarios</a>
+        <a href="index.html">Volver</a>
+    </div>
+</body>
+</html>
