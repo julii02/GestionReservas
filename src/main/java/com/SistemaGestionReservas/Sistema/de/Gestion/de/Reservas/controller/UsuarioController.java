@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -26,6 +27,7 @@ public class UsuarioController {
         usuarioServ.saveUsuario(usuario);
         return "Guardado Correctamente!";
     }
+
     
     @GetMapping("/usuario/traer")
     public List <Usuario> traerUsuarios(){
@@ -42,6 +44,10 @@ public class UsuarioController {
     public Usuario editarUsuario(@RequestBody Usuario usuario){
         usuarioServ.editUsuario(usuario);
         return usuario;
+    }
+    
+    public Usuario buscarUsuarioPorNombre(@PathVariable String nombre) {
+        return usuarioServ.buscarPorNombre(nombre).orElse(null);
     }
        
 }

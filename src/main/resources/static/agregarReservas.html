@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #3498db;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Agregar Reserva</h2>
+    <form id="reservaForm">
+        <label for="inicioReserva">Inicio de la Reserva</label>
+        <input type="datetime-local" id="inicioReserva" name="inicioReserva" required>
+
+        <label for="finReserva">Fin de la Reserva</label>
+        <input type="datetime-local" id="finReserva" name="finReserva" required>
+
+        <label for="usuario">ID del Usuario</label>
+        <input type="number" id="usuario" name="usuario" required>
+
+        <label for="espacio">ID del Espacio</label>
+        <input type="number" id="espacio" name="espacio" required>
+
+        <button type="submit">Guardar Reserva</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('reservaForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        // Obtener los valores del formulario
+        const inicioReserva = document.getElementById('inicioReserva').value;
+        const finReserva = document.getElementById('finReserva').value;
+        const usuario = document.getElementById('usuario').value;
+        const espacio = document.getElementById('espacio').value;
+
+        // Construir el objeto de la reserva
+        const reserva = {
+            inicioReserva: inicioReserva,
+            finReserva: finReserva,
+            usuario: { idUsuario: usuario },
+            espacio: { idEspacio: espacio }
+        };
+
+        try {
+            // Hacer la solicitud POST para agregar la reserva
+            const response = await fetch('/reserva/crear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reserva)
+            });
+
+            if (response.ok) {
+                alert('Reserva guardada con éxito');
+                // Opcional: Limpiar el formulario después de guardar
+                document.getElementById('reservaForm').reset();
+            } else {
+                alert('Error al guardar la reserva');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error de red o del servidor al intentar guardar la reserva');
+        }
+    });
+</script>
+
+</body>
+</html>

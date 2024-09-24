@@ -4,6 +4,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IEspacioRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class EspacioService implements IEspacioService{
     public void saveEspacio(Espacio espacio) {
             
            espacioRepo.save(espacio);
+           
     }
 
     @Override
@@ -46,5 +48,14 @@ public class EspacioService implements IEspacioService{
         espacioRepo.save(espacio);
     
     }
+
+    @Override
+    public Optional<Espacio> buscarPorNombre(String nombre) {
+  List<Espacio> espacios = espacioRepo.findAll();
+        // Filtrar espacios que coincidan con el nombre
+        return espacios.stream()
+                       .filter(espacio -> espacio.getNombre().equalsIgnoreCase(nombre))
+                       .findFirst(); // Devuelve el primer espacio que coincida}
     
+}
 }

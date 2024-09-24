@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+    <script>
+        async function cargarEspacios() {
+            const response = await fetch('/espacio/traer');
+            const espacios = await response.json();
+            const selectEspacio = document.getElementById("idEspacio");
+
+            espacios.forEach(espacio => {
+                const option = document.createElement("option");
+                option.value = espacio.idEspacio;
+                option.text = espacio.nombreEspacio;
+                selectEspacio.appendChild(option);
+            });
+        }
+
+        async function buscarUsuario() {
+            const nombreUsuario = document.getElementById("nombreUsuario").value;
+            const response = await fetch(`/usuario/buscarPorNombre/${nombreUsuario}`);
+            const usuario = await response.json();
+            if (usuario) {
+                document.getElementById("idUsuario").value = usuario.idUsuario;
+            } else {
+                alert("Usuario no encontrado");
+            }
+        }
+
+        async function registrarReserva(event) {
+            event.preventDefault();
+
+            const reserva = {
+                inicioReserva: document.getElementById("inicioReserva").value,
+                finReserva: document.getElementById("finReserva").value,
+                usuario: { idUsuario: parseInt(document.getElementById("idUsuario").value) }, // Convertimos a Long
+                espacio: { idEspacio: parseInt(document.getElementById("idEspacio").value) }  // Convertimos a Long
+            };
+
+            const response = await fetch('/reserva/crear', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reserva)
+            });
+
+            const result = await response.text();
+            alert(result);
+        }
+
+        window.onload = cargarEspacios; // Cargamos los espacios al cargar la página
+    </script>
+</head>
+<body>
+
+    <h1>Crear Reserva</h1>
+
+    <form onsubmit="registrarReserva(event)">
+        <label for="nombreUsuario">Nombre del Usuario:</label>
+        <input type="text" id="nombreUsuario" name="nombreUsuario" required>
+        <button type="button" onclick="buscarUsuario()">Buscar Usuario</button>
+
+        <label for="idEspacio">Seleccionar Espacio:</label>
+        <select id="idEspacio" name="idEspacio" required>
+            <option value="" disabled selected>Seleccione un espacio</option>
+        </select>
+
+        <label for="inicioReserva">Fecha y hora de inicio:</label>
+        <input type="datetime-local" id="inicioReserva" name="inicioReserva" required>
+
+        <label for="finReserva">Fecha y hora de fin:</label>
+        <input type="datetime-local" id="finReserva" name="finReserva" required>
+
+        <!-- Campos ocultos donde se almacenarán los ID de usuario -->
+        <input type="hidden" id="idUsuario" name="idUsuario">
+
+        <button type="submit">Registrar Reserva</button>
+    </form>
+
+</body>
+</html>

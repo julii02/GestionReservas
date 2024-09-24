@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IEspacioService {
@@ -23,6 +24,6 @@ public interface IEspacioService {
     //Modificar Espacio
     public void editEspacio(Espacio espacio);
     
-    
+    public Optional<Espacio> buscarPorNombre(String nombre);
     
 }

@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Usuario;
 import java.util.List;
+import java.util.Optional;
 
 public interface IUsuarioService {
     
@@ -21,5 +22,6 @@ public interface IUsuarioService {
     //Modificar Usuario
     public void editUsuario(Usuario usuario);
     
+    public Optional<Usuario> buscarPorNombre(String nombre);
     
 }
