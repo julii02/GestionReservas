@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botones Centrados</title>
+    <title>Página Principal de Espacios</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: black;
+            background-color: #f0f0f0;
         }
 
         .button-container {
@@ -39,14 +40,19 @@
             background-color: #2980b9;
             transform: translateY(-5px);
         }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #34495e;
+        }
     </style>
 </head>
 <body>
+    <h1>Gestión de Espacios</h1>
     <div class="button-container">
-        <a href="indexEspacios.html">Espacios</a>
-        <a href="indexUsuarios.html">Usuarios</a>
-        <a href="#">Reservas</a>
-        <a href="#">Facturas</a>
+        <a href="agregarEspacios.html">Agregar Espacios</a>
+        <a href="traerEspacios.html">Ver Espacios</a>
+        <a href="index.html">Volver</a>
     </div>
 </body>
 </html>
