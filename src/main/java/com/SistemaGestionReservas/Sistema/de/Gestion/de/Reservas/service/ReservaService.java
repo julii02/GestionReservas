@@ -74,6 +74,7 @@ public class ReservaService implements IReservaService{
     nuevaFactura.setMontoTotal((double) montoTotal);
     nuevaFactura.setFechaEmision(LocalDate.now());
     nuevaFactura.setReserva(reserva); // Aquí la reserva ya está guardada y tiene un ID
+    nuevaFactura.setEstado("pendiente");
 
     // Paso 3: Guardar la factura
     facturaRepo.save(nuevaFactura);
@@ -97,6 +98,14 @@ public class ReservaService implements IReservaService{
 
     @Override
     public String deleteReserva(Long idReserva) {
+        List <Factura> listaFacturas = facturaRepo.findAll();
+        List<Factura> facturasAEliminar = new ArrayList<>();
+        for(Factura factura : listaFacturas){
+            if(factura.getReserva().getIdReserva() == idReserva){
+                facturasAEliminar.add(factura);
+            }
+        }
+        facturaRepo.deleteAll(facturasAEliminar);
         reservaRepo.deleteById(idReserva);
         return "Reserva eliminada correctamente";
     }

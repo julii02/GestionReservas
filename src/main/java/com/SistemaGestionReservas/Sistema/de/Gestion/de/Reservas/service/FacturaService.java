@@ -14,9 +14,11 @@ public class FacturaService implements IFacturaService{
     private IFacturaRepository facturaRepo;
     
     @Override
-    public Factura editFactura(Factura factura) {
-        facturaRepo.save(factura);
-        return factura;
+    public Factura editFacturaEstado(long idFactura) {
+        Factura factu = facturaRepo.findById(idFactura).orElse(null);
+        factu.setEstado("Pagado");
+        facturaRepo.save(factu);
+        return factu;
     }
     
 }

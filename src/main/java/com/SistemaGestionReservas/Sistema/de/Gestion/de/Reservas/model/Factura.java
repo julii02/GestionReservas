@@ -20,6 +20,7 @@ public class Factura {
     private Long idFactura;
     private Double montoTotal;
     private LocalDate fechaEmision;
+    private String estado;
     
     @OneToOne
     @JoinColumn(name = "reserva_id")  

@@ -5,5 +5,5 @@ import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Factura;
 
 public interface IFacturaService {
     
-    public Factura editFactura(Factura factura);
+    public Factura editFacturaEstado(long idFactura);
 }
