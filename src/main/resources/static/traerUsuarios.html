@@ -127,6 +127,25 @@
             color: #bbb;
             margin-top: 20px;
         }
+
+        a.volver {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a.volver:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
@@ -154,7 +173,7 @@
     </table>
 
     <div class="loading" id="loading">Cargando usuarios...</div>
-
+    <a href="indexUsuarios.html" class="volver">Volver</a>
     <script>
         // Función para obtener todos los usuarios desde el backend
         async function fetchUsuarios() {

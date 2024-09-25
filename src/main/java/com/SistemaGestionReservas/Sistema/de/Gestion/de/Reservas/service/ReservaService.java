@@ -145,7 +145,7 @@ public class ReservaService implements IReservaService{
         List <Reserva> reservaFiltrada = new ArrayList<>();
         
         for(Reserva reserva : todasReservas){
-            if(reserva.getUsuario().getApellido().contains(nombre) || reserva.getUsuario().getApellido().contains(nombre) || 
+            if(reserva.getUsuario().getApellido().contains(nombre) || reserva.getUsuario().getNombre().contains(nombre) || 
                     reserva.getEspacio().getDescripcion().contains(nombre) || reserva.getEspacio().getNombre().contains(nombre)){
                 reservaFiltrada.add(reserva);
             }

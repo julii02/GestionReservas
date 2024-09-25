@@ -87,6 +87,25 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 10px rgba(41, 128, 185, 0.3);
         }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #2980b9;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(41, 128, 185, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -104,7 +123,12 @@
         <input type="email" id="email" name="email" required placeholder="Ingresa tu correo">
 
         <button type="submit">Guardar Usuario</button>
+        <a href="indexUsuarios.html" class="back-link">Volver</a>
     </form>
+
+    
+
+    
 
     <script>
         document.getElementById('usuarioForm').addEventListener('submit', async function(event) {

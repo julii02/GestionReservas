@@ -93,10 +93,61 @@
         .action-buttons button.delete:hover {
             background-color: #c0392b;
         }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: 300px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+
+        a.volver {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a.volver:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
     <h2>Listado de Reservas</h2>
+
+    <!-- Barra de búsqueda por nombre de usuario -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario">
+        <button onclick="buscarReserva()">Buscar</button>
+    </div>
 
     <div class="loading" id="loadingMessage">Cargando reservas...</div>
 
@@ -114,18 +165,20 @@
             <!-- Las filas de las reservas serán añadidas aquí dinámicamente -->
         </tbody>
     </table>
-
+    <a href="indexReservas.html" class="volver">Volver</a>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const loadingMessage = document.getElementById('loadingMessage');
             const reservasTable = document.getElementById('reservasTable');
             const reservasBody = document.getElementById('reservasBody');
+            let todasLasReservas = [];
 
             // Función para cargar las reservas
             function cargarReservas() {
                 fetch('/reserva/traer')
                     .then(response => response.json())
                     .then(reservas => {
+                        todasLasReservas = reservas; // Guardar todas las reservas
                         if (reservas.length === 0) {
                             loadingMessage.textContent = 'No hay reservas disponibles.';
                             return;
@@ -135,27 +188,32 @@
                         loadingMessage.style.display = 'none';
                         reservasTable.style.display = 'table';
 
-                        // Recorrer cada reserva
-                        reservas.forEach((reserva) => {
-                            // Crear una nueva fila en la tabla
-                            const fila = document.createElement('tr');
-                            fila.innerHTML = `
-                                <td>${new Date(reserva.inicioReserva).toLocaleString()}</td>
-                                <td>${new Date(reserva.finReserva).toLocaleString()}</td>
-                                <td>${reserva.usuario.nombre} ${reserva.usuario.apellido} (${reserva.usuario.email})</td>
-                                <td>${reserva.espacio.nombre} - ${reserva.espacio.descripcion}</td>
-                                <td class="action-buttons">
-                                    <button class="edit">Editar</button>
-                                    <button class="delete" onclick="eliminarReserva(${reserva.idReserva})">Eliminar</button>
-                                </td>
-                            `;
-                            reservasBody.appendChild(fila);
-                        });
+                        mostrarReservas(reservas);
                     })
                     .catch(error => {
                         console.error('Error al cargar reservas:', error);
                         loadingMessage.textContent = 'Ocurrió un error al cargar las reservas.';
                     });
+            }
+
+            // Función para mostrar las reservas en la tabla
+            function mostrarReservas(reservas) {
+                reservasBody.innerHTML = ''; // Limpiar el cuerpo de la tabla
+                reservas.forEach((reserva) => {
+                    // Crear una nueva fila en la tabla
+                    const fila = document.createElement('tr');
+                    fila.innerHTML = `
+                        <td>${new Date(reserva.inicioReserva).toLocaleString()}</td>
+                        <td>${new Date(reserva.finReserva).toLocaleString()}</td>
+                        <td>${reserva.usuario.nombre} ${reserva.usuario.apellido} (${reserva.usuario.email})</td>
+                        <td>${reserva.espacio.nombre} - ${reserva.espacio.descripcion}</td>
+                        <td class="action-buttons">
+                            <button class="edit">Editar</button>
+                            <button class="delete" onclick="eliminarReserva(${reserva.idReserva})">Eliminar</button>
+                        </td>
+                    `;
+                    reservasBody.appendChild(fila);
+                });
             }
 
             // Función para eliminar una reserva
@@ -181,11 +239,28 @@
                 });
             }
 
+            // Función para buscar reservas por nombre de usuario
+            function buscarReserva() {
+    const termino = document.getElementById('searchInput').value.toLowerCase();
+    
+            const reservasFiltradas = todasLasReservas.filter(reserva =>
+                // Buscar por nombre y apellido del usuario
+                (reserva.usuario.nombre.toLowerCase().includes(termino) || 
+                reserva.usuario.apellido.toLowerCase().includes(termino)) || 
+                // Buscar por nombre y descripción del espacio
+                (reserva.espacio.nombre.toLowerCase().includes(termino) || 
+                reserva.espacio.descripcion.toLowerCase().includes(termino))
+            );
+
+    mostrarReservas(reservasFiltradas); // Mostrar solo las reservas filtradas
+}
+
             // Llamar a la función para cargar reservas al cargar la página
             cargarReservas();
 
-            // Hacer la función eliminarReserva accesible desde el HTML
+            // Hacer las funciones accesibles desde el HTML
             window.eliminarReserva = eliminarReserva;
+            window.buscarReserva = buscarReserva;
         });
     </script>
 </body>

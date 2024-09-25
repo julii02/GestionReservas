@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Reserva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            background-color: #1b1b1b;
+            color: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -16,47 +19,92 @@
         }
 
         .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            background-color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 400px;
         }
 
         h2 {
-            text-align: center;
+            font-size: 2rem;
             margin-bottom: 20px;
-            color: #333;
+            text-align: center;
+            color: #ffffff;
         }
 
         label {
-            font-weight: bold;
-            display: block;
+            font-size: 1rem;
+            font-weight: 600;
             margin-bottom: 5px;
-            color: #555;
+            color: #ffffff;
         }
 
-        input, select {
+        input[type="datetime-local"],
+        select {
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            background-color: #444;
+            color: white;
             width: 100%;
-            padding: 10px;
+            box-sizing: border-box;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        }
+
+        input[type="datetime-local"]::placeholder,
+        select::placeholder {
+            color: #bbb;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            background-color: #555;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 600;
             color: white;
+            background-color: #3498db;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 12px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            width: 100%;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(41, 128, 185, 0.5);
+        }
+
+        button:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(41, 128, 185, 0.3);
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-link:hover {
+            background-color: #2980b9;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(41, 128, 185, 0.5);
         }
     </style>
 </head>
@@ -82,6 +130,7 @@
 
             <button type="submit">Guardar Reserva</button>
         </form>
+        <a href="indexReservas.html" class="back-link">Volver</a>
     </div>
 
     <script>
