@@ -191,38 +191,33 @@
 
         // Función para mostrar espacios en la tabla
         function mostrarEspacios(espacios) {
-            const espaciosBody = document.getElementById('espaciosBody');
-            const loadingDiv = document.getElementById('loading');
+    const espaciosBody = document.getElementById('espaciosBody');
+    const loadingDiv = document.getElementById('loading');
 
-            // Limpiamos el contenido anterior de la tabla
-            espaciosBody.innerHTML = '';
-            // Removemos el mensaje de carga
-            loadingDiv.style.display = 'none';
+    espaciosBody.innerHTML = ''; // Limpiar tabla anterior
+    loadingDiv.style.display = 'none'; // Ocultar el mensaje de carga
 
-            // Verificamos si hay espacios
-            if (espacios.length > 0) {
-                espacios.forEach(espacio => {
-                    // Crear fila para cada espacio
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${espacio.idEspacio}</td>
-                        <td>${espacio.nombre}</td>
-                        <td>${espacio.descripcion}</td>
-                        <td>${espacio.precioPorHora}</td>
-                        <td>
-                            <div class="actions">
-                                <button class="edit">Editar</button>
-                                <button class="delete">Eliminar</button>
-                            </div>
-                        </td>
-                    `;
-                    espaciosBody.appendChild(row);
-                });
-            } else {
-                // Si no hay espacios, mostramos un mensaje
-                espaciosBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No se encontraron espacios.</td></tr>';
-            }
-        }
+    if (espacios.length > 0) {
+        espacios.forEach(espacio => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${espacio.idEspacio}</td>
+                <td>${espacio.nombre}</td>
+                <td>${espacio.descripcion}</td>
+                <td>${espacio.precioPorHora}</td>
+                <td>
+                    <div class="actions">
+                        <button class="edit">Editar</button>
+                        <button class="delete" onclick="eliminarEspacio(${espacio.idEspacio})">Eliminar</button>
+                    </div>
+                </td>
+            `;
+            espaciosBody.appendChild(row);
+        });
+    } else {
+        espaciosBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No se encontraron espacios.</td></tr>';
+    }
+}
 
         // Función para buscar espacios por nombre
         async function buscarEspacio() {
@@ -245,6 +240,27 @@
 
         // Llamar a la función cuando se carga la página
         window.onload = fetchEspacios;
+
+        async function eliminarEspacio(idEspacio) {
+    if (confirm("¿Estás seguro de que deseas eliminar este espacio?")) {
+        try {
+            const response = await fetch(`/espacio/borrar/${idEspacio}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert("Espacio eliminado con éxito");
+                fetchEspacios(); // Actualizar la tabla después de eliminar
+            } else {
+                alert("Error al eliminar el espacio");
+            }
+        } catch (error) {
+            console.error('Error al eliminar el espacio:', error);
+            alert("Error al eliminar el espacio");
+        }
+    }
+}
+
     </script>
 
 </body>

@@ -185,6 +185,26 @@
             }
         }
 
+        // Función para eliminar un usuario por su ID
+        async function borrarUsuario(idUsuario) {
+            if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+                try {
+                    const response = await fetch(`/usuario/borrar/${idUsuario}`, {
+                        method: 'DELETE',
+                    });
+                    if (response.ok) {
+                        alert('Usuario eliminado exitosamente');
+                        fetchUsuarios(); // Refrescar la lista de usuarios
+                    } else {
+                        alert('Error al eliminar el usuario');
+                    }
+                } catch (error) {
+                    console.error('Error al eliminar el usuario:', error);
+                    alert('Error al eliminar el usuario');
+                }
+            }
+        }
+
         // Función para mostrar usuarios en la tabla
         function mostrarUsuarios(usuarios) {
             const usuariosBody = document.getElementById('usuariosBody');
@@ -209,7 +229,7 @@
                         <td>
                             <div class="actions">
                                 <button class="edit">Editar</button>
-                                <button class="delete">Eliminar</button>
+                                <button class="delete" onclick="borrarUsuario(${usuario.idUsuario})">Eliminar</button>
                             </div>
                         </td>
                     `;

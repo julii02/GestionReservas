@@ -5,33 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Espacio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
+            background-color: #1b1b1b;
+            color: white;
         }
 
-        form {
-            width: 50%;
-            margin: 0 auto;
-            padding: 30px;
-            background-color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+        .form-container {
+            width: 80%;
+            max-width: 500px;
+            background-color: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
         }
 
         h2 {
             text-align: center;
-            color: #3498db;
+            color: #ffffff;
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: #333;
+            color: #ffffff;
         }
 
         input[type="text"],
@@ -59,21 +65,16 @@
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         button:hover {
             background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-
-        .form-container {
-            width: 80%;
-            margin: 0 auto;
-            padding-top: 30px;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(41, 128, 185, 0.5);
         }
 
         .back-link {
@@ -83,13 +84,16 @@
             color: white;
             background-color: #3498db;
             padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 12px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         .back-link:hover {
             background-color: #2980b9;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(41, 128, 185, 0.5);
         }
     </style>
 </head>
@@ -119,12 +123,10 @@
         document.getElementById('espacioForm').addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            // Obtener los valores del formulario
             const nombre = document.getElementById('nombre').value;
             const descripcion = document.getElementById('descripcion').value;
             const precioPorHora = document.getElementById('precioPorHora').value;
 
-            // Crear el objeto espacio
             const espacio = {
                 nombre: nombre,
                 descripcion: descripcion,
@@ -132,7 +134,6 @@
             };
 
             try {
-                // Enviar solicitud POST al backend
                 const response = await fetch('/espacio/guardar', {
                     method: 'POST',
                     headers: {
@@ -141,10 +142,8 @@
                     body: JSON.stringify(espacio)
                 });
 
-                // Verificar la respuesta del servidor
                 if (response.ok) {
                     alert('Espacio guardado con éxito!');
-                    // Limpiar formulario después de guardar
                     document.getElementById('espacioForm').reset();
                 } else {
                     alert('No se pudo guardar el espacio. Verifique los datos e inténtelo nuevamente.');

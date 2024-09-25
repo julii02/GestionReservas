@@ -25,7 +25,7 @@
         }
 
         table {
-            width: 100%; /* Aumentar el ancho de la tabla */
+            width: 100%;
             max-width: 1300px;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -40,7 +40,7 @@
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #444;
-            word-wrap: break-word; /* Permitir que las palabras se dividan */
+            word-wrap: break-word;
         }
 
         th {
@@ -77,21 +77,21 @@
         }
 
         .action-buttons button.edit {
-            background-color: #27ae60; /* Verde para editar */
+            background-color: #27ae60;
             color: white;
         }
 
         .action-buttons button.edit:hover {
-            background-color: #219653; /* Verde más oscuro */
+            background-color: #219653;
         }
 
         .action-buttons button.delete {
-            background-color: #e74c3c; /* Rojo para eliminar */
+            background-color: #e74c3c;
             color: white;
         }
 
         .action-buttons button.delete:hover {
-            background-color: #c0392b; /* Rojo más oscuro */
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -146,7 +146,7 @@
                                 <td>${reserva.espacio.nombre} - ${reserva.espacio.descripcion}</td>
                                 <td class="action-buttons">
                                     <button class="edit">Editar</button>
-                                    <button class="delete">Eliminar</button>
+                                    <button class="delete" onclick="eliminarReserva(${reserva.idReserva})">Eliminar</button>
                                 </td>
                             `;
                             reservasBody.appendChild(fila);
@@ -158,8 +158,34 @@
                     });
             }
 
+            // Función para eliminar una reserva
+            function eliminarReserva(idReserva) {
+                if (!confirm("¿Estás seguro de que quieres eliminar esta reserva?")) {
+                    return; // Si el usuario no confirma, salimos de la función
+                }
+
+                fetch(`/reserva/borrar/${idReserva}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Reserva eliminada exitosamente.');
+                        location.reload(); // Recargar la página para actualizar la lista de reservas
+                    } else {
+                        alert('Error al eliminar la reserva.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar la reserva:', error);
+                    alert('Ocurrió un error al intentar eliminar la reserva.');
+                });
+            }
+
             // Llamar a la función para cargar reservas al cargar la página
             cargarReservas();
+
+            // Hacer la función eliminarReserva accesible desde el HTML
+            window.eliminarReserva = eliminarReserva;
         });
     </script>
 </body>
