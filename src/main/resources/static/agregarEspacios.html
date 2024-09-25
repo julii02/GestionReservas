@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,61 +16,107 @@
         form {
             width: 50%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #3498db;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: bold;
+            color: #333;
         }
 
         input[type="text"],
         input[type="number"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.4);
+            outline: none;
         }
 
         button {
-            padding: 10px 20px;
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
             background-color: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
         }
 
+        .form-container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 30px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
+
 <body>
 
-    <h2 style="text-align: center;">Agregar un Nuevo Espacio</h2>
+    <div class="form-container">
+        <h2>Agregar un Nuevo Espacio</h2>
 
-    <form id="espacioForm">
-        <label for="nombre">Nombre del Espacio</label>
-        <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="30">
+        <form id="espacioForm">
+            <label for="nombre">Nombre del Espacio</label>
+            <input type="text" id="nombre" name="nombre" required minlength="3" maxlength="30">
 
-        <label for="descripcion">Descripción</label>
-        <input type="text" id="descripcion" name="descripcion" required minlength="3" maxlength="30">
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" name="descripcion" required minlength="3" maxlength="30">
 
-        <label for="precioPorHora">Precio por Hora</label>
-        <input type="number" id="precioPorHora" name="precioPorHora" required min="900" max="10000">
+            <label for="precioPorHora">Precio por Hora</label>
+            <input type="number" id="precioPorHora" name="precioPorHora" required min="900" max="10000">
 
-        <button type="submit">Guardar Espacio</button>
-    </form>
+            <button type="submit">Guardar Espacio</button>
+        </form>
+
+        <a href="index.html" class="back-link">Volver</a>
+    </div>
 
     <script>
-        document.getElementById('espacioForm').addEventListener('submit', async function(event) {
+        document.getElementById('espacioForm').addEventListener('submit', async function (event) {
             event.preventDefault();
 
             // Obtener los valores del formulario
@@ -97,6 +144,8 @@
                 // Verificar la respuesta del servidor
                 if (response.ok) {
                     alert('Espacio guardado con éxito!');
+                    // Limpiar formulario después de guardar
+                    document.getElementById('espacioForm').reset();
                 } else {
                     alert('No se pudo guardar el espacio. Verifique los datos e inténtelo nuevamente.');
                 }
@@ -108,4 +157,5 @@
     </script>
 
 </body>
+
 </html>

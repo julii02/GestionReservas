@@ -46,4 +46,9 @@ public class EspacioController {
     public Espacio buscarEspacioPorNombre(@PathVariable String nombre) {
         return espacioServ.buscarPorNombre(nombre).orElse(null);
     }
+    
+    @GetMapping("/espacio/traerPorNombre/{nombre}")
+    public List <Espacio> traerEspacioPorNombre(@PathVariable String nombre){
+        return espacioServ.traerEspacioPorNombre(nombre);
+    }
 }

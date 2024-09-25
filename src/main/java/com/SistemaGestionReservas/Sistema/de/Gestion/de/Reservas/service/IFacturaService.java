@@ -9,4 +9,6 @@ public interface IFacturaService {
     public Factura editFacturaEstado(long idFactura);
     
     public List <Factura> traerFacturas();
+    
+    public List <Factura> traerFacturaPorNombre(String nombre);
 }

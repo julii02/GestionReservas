@@ -34,4 +34,9 @@ public class ReservaController {
         reservaServi.deleteReserva(idReserva);
         return "Reserva Eliminado";
     }
+    
+    @GetMapping("/reserva/traerPorNombre/{nombre}")
+    public List <Reserva> TraerReservasPorNombre(@PathVariable String nombre){
+        return reservaServi.traerReservasPorNombre(nombre);
+    }
 }

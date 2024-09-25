@@ -49,5 +49,10 @@ public class UsuarioController {
     public Usuario buscarUsuarioPorNombre(@PathVariable String nombre) {
         return usuarioServ.buscarPorNombre(nombre).orElse(null);
     }
+    
+    @GetMapping("/usuario/traerPorNombre/{nombre}")
+    public List <Usuario> traerUsuarioPorNombre(@PathVariable String nombre){
+        return usuarioServ.traerPorNombre(nombre);
+    }
        
 }

@@ -24,5 +24,5 @@ public interface IReservaService {
     //Mostar reservas de un espacio
     public List<Reserva> getReservaEspacios(Long idEspacio);
     
-    
+    public List <Reserva> traerReservasPorNombre(String nombre);
 }

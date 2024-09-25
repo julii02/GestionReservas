@@ -3,6 +3,7 @@ package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service;
 
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Factura;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.repository.IFacturaRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,20 @@ public class FacturaService implements IFacturaService{
     @Override
     public List<Factura> traerFacturas() {
         return facturaRepo.findAll();
+    }
+
+    @Override
+    public List<Factura> traerFacturaPorNombre(String nombre) {
+        List <Factura> todasFacturas = facturaRepo.findAll();
+        List <Factura> facturaFiltrada = new ArrayList<>();
+        
+        for(Factura factura : todasFacturas){
+            if(factura.getReserva().getUsuario().getApellido().contains(nombre) ||factura.getReserva().getUsuario().getNombre().contains(nombre) ||
+                    factura.getReserva().getEspacio().getDescripcion().contains(nombre) || factura.getReserva().getEspacio().getNombre().contains(nombre)){
+                facturaFiltrada.add(factura);
+            }
+        }
+        return facturaFiltrada;
     }
     
 }

@@ -24,4 +24,6 @@ public interface IUsuarioService {
     
     public Optional<Usuario> buscarPorNombre(String nombre);
     
+    public List <Usuario> traerPorNombre(String nombre);
+    
 }

@@ -25,5 +25,10 @@ public class FacturaController {
     public List <Factura> traerFacturas(){
         return facturaServ.traerFacturas();
     }
+    
+    @GetMapping("/factura/traerPorNombre/{nombre}")
+    public List <Factura> traerFacturasPorNombre(@PathVariable String nombre){
+        return facturaServ.traerFacturaPorNombre(nombre);
+    }
 
 }

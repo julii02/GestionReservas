@@ -26,4 +26,6 @@ public interface IEspacioService {
     
     public Optional<Espacio> buscarPorNombre(String nombre);
     
+    public List <Espacio> traerEspacioPorNombre(String nombre);
+    
 }
