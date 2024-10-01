@@ -1,5 +1,7 @@
 package com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.controller;
 
+import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.exception.ExceptionDetails;
+import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.exception.ReservasException;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.model.Espacio;
 import com.SistemaGestionReservas.Sistema.de.Gestion.de.Reservas.service.IEspacioService;
 import jakarta.validation.Valid;
@@ -31,7 +33,11 @@ public class EspacioController {
     }
     
     @DeleteMapping("espacio/borrar/{idEspacio}")
-    public String borrarEspacio(@PathVariable long idEspacio){
+    public String borrarEspacio(@PathVariable Long idEspacio)throws ReservasException{
+        if(idEspacio == 0 || idEspacio == null){
+            throw new ReservasException("Id de usuario no valido" , 
+                    new ExceptionDetails("Ha ocurrido un error inesparado","Error"));
+        }
         espacioServ.deleteEspacio(idEspacio);
         return "Espacio Eliminado";
     }
@@ -43,12 +49,21 @@ public class EspacioController {
     }
     
     @GetMapping("/espacio/buscarPorNombre/{nombre}")
-    public Espacio buscarEspacioPorNombre(@PathVariable String nombre) {
-        return espacioServ.buscarPorNombre(nombre).orElse(null);
+    public Espacio buscarEspacioPorNombre(@PathVariable String nombre) throws ReservasException {
+         return espacioServ.buscarPorNombre(nombre)
+            .orElseThrow(() -> new ReservasException(
+                "El espacio con nombre '" + nombre + "' no fue encontrado",
+                new ExceptionDetails("No se ha encontrado el espacio solicitado", "Error")
+            ));
     }
     
     @GetMapping("/espacio/traerPorNombre/{nombre}")
     public List <Espacio> traerEspacioPorNombre(@PathVariable String nombre){
-        return espacioServ.traerEspacioPorNombre(nombre);
+        List <Espacio> listaEspacios = espacioServ.traerEspacioPorNombre(nombre);
+        if(listaEspacios.isEmpty()){
+            throw new ReservasException("No se encontraron espacios con el nombre " + nombre,
+                                        new ExceptionDetails("espacios no encontrados" , "Error"));
+        }
+        return listaEspacios;
     }
 }
