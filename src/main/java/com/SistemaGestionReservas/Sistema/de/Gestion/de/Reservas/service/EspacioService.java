@@ -51,13 +51,17 @@ public class EspacioService implements IEspacioService{
     }
 
     @Override
-    public Optional<Espacio> buscarPorNombre(String nombre) {
-  List<Espacio> espacios = espacioRepo.findAll();
-        // Filtrar espacios que coincidan con el nombre
-        return espacios.stream()
-                       .filter(espacio -> espacio.getNombre().equalsIgnoreCase(nombre))
-                       .findFirst(); // Devuelve el primer espacio que coincida}
+    public Espacio buscarPorNombre(String nombre) {
+
+           List<Espacio> listaEspacios = espacioRepo.findAll(); 
+    for (Espacio espacio : listaEspacios) {
+        if (espacio.getNombre().equals(nombre)) {
+            return espacio;
+        }
+    }
     
+    return null; 
+   
 }
 
     @Override

@@ -24,7 +24,7 @@ public interface IEspacioService {
     //Modificar Espacio
     public void editEspacio(Espacio espacio);
     
-    public Optional<Espacio> buscarPorNombre(String nombre);
+    public Espacio buscarPorNombre(String nombre);
     
     public List <Espacio> traerEspacioPorNombre(String nombre);
     

@@ -43,19 +43,32 @@ public class EspacioController {
     }
     
     @PutMapping("espacio/editar")
-    public Espacio editarEspacio(@RequestBody Espacio espacio){
+    public Espacio editarEspacio(@RequestBody Espacio espacio)throws ReservasException{
+        if(espacio.getDescripcion().isEmpty() ||  espacio.getNombre().isEmpty() ){
+              throw new ReservasException("Campo Descripcion o Nombre vacios" , 
+                    new ExceptionDetails("Ha ocurrido un error evitable","Error"));
+        }
         espacioServ.editEspacio(espacio);
         return espacio;
     }
     
     @GetMapping("/espacio/buscarPorNombre/{nombre}")
     public Espacio buscarEspacioPorNombre(@PathVariable String nombre) throws ReservasException {
-         return espacioServ.buscarPorNombre(nombre)
-            .orElseThrow(() -> new ReservasException(
-                "El espacio con nombre '" + nombre + "' no fue encontrado",
-                new ExceptionDetails("No se ha encontrado el espacio solicitado", "Error")
-            ));
-    }
+         
+         if(nombre.isEmpty() ||  nombre.isBlank()){
+              throw new ReservasException("Campo Nombre vacios" , 
+                    new ExceptionDetails("Ha ocurrido un error evitable","Error"));
+         }
+         else if(espacioServ.buscarPorNombre(nombre).equals(null)){
+             throw new ReservasException("No se encontro el Espacio que buscas" , 
+                    new ExceptionDetails("Ha ocurrido un error evitable","Error"));
+         }
+         else{
+         
+        return espacioServ.buscarPorNombre(nombre);
+         }
+                }
+            
     
     @GetMapping("/espacio/traerPorNombre/{nombre}")
     public List <Espacio> traerEspacioPorNombre(@PathVariable String nombre){
